@@ -1,21 +1,8 @@
 from django.shortcuts import render
+from .models import Dog
 
 # Add the following import
 from django.http import HttpResponse
-
-# Add the Cat class & list and view function below the imports
-class Dog:  # Note that parens are optional if not inheriting from another class
-  def __init__(self, name, breed, description, age):
-    self.name = name
-    self.breed = breed
-    self.description = description
-    self.age = age
-
-dogs = [
-  Dog('Lolo', 'tabby', 'foul little demon', 3),
-  Dog('Sachi', 'tortoise shell', 'diluted tortoise shell', 0),
-  Dog('Raven', 'black tripod', '3 legged cat', 4)
-]
 
 # Define the home view
 def home(request):
@@ -25,4 +12,11 @@ def about(request):
   return render(request, 'about.html')
 
 def dogs_index(request):
+  # retrives all dogs from db
+  dogs = Dog.objects.all()
   return render(request, 'dogs/index.html', { 'dogs': dogs })
+
+def dogs_detail(request, dog_id):
+  # retrieve a single cat using an id
+  dog = Dog.objects.get(id=dog_id)
+  return render(request, 'dogs/detail.html', { 'dog': dog })
