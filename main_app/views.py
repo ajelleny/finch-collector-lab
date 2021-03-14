@@ -28,4 +28,12 @@ def dogs_detail(request, dog_id):
   }
   return render(request, 'dogs/detail.html', context)
 
-  
+def add_feeding(request, dog_id):
+  # create the model form using dating stored in the post request 
+  form = FeedingForm(request.POST)
+  # validate the form 
+  if form.is_valid():
+    new_feeding = form.save(commit=False)
+    new_feeding.dog_id = dog_id
+    new_feeding.save()
+  return redirect('detail', dog_id=dog_id)
