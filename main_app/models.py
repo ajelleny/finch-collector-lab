@@ -8,11 +8,20 @@ MEALS = (
 )
 
 # Create your models here.
+class Toy(models.Model):
+    name = models.CharField(max_length=50)
+    color = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.name
+
 class Dog(models.Model):
     name = models.CharField(max_length=100)
     breed = models.CharField(max_length=100)
     description = models.TextField(max_length=250)
     age = models.IntegerField()
+    # adds the many to many association 
+    toys = models.ManyToManyField(Toy)
 
     def __str__(self):
         return f"{self.name}"
@@ -24,7 +33,7 @@ class Feeding(models.Model):
         choices=MEALS, 
         default=MEALS[0][0]
     )
-    # sets the 1:many association and handles deleting meals when a cat is deleted from the db
+    # sets the 1:many association and handles deleting meals when a dog is deleted from the db
     dog = models.ForeignKey(Dog, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -32,3 +41,4 @@ class Feeding(models.Model):
 
     class Meta: 
         ordering = ['-date']
+
