@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Dog
+from .forms import FeedingForm
 
 # Add the following import
 from django.http import HttpResponse
@@ -17,6 +18,14 @@ def dogs_index(request):
   return render(request, 'dogs/index.html', { 'dogs': dogs })
 
 def dogs_detail(request, dog_id):
-  # retrieve a single cat using an id
+  # retrieve a single dog using an id
   dog = Dog.objects.get(id=dog_id)
-  return render(request, 'dogs/detail.html', { 'dog': dog })
+  # create an instance of the feeding form 
+  feeding_form = FeedingForm()
+  context = {
+    'dog': dog,
+    'feeding_form': feeding_form
+  }
+  return render(request, 'dogs/detail.html', context)
+
+  
