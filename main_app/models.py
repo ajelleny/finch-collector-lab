@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 #constant variable 
 MEALS = (
@@ -22,6 +23,7 @@ class Dog(models.Model):
     age = models.IntegerField()
     # adds the many to many association 
     toys = models.ManyToManyField(Toy)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.name}"
